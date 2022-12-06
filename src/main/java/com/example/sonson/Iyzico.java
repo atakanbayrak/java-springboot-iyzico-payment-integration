@@ -42,7 +42,7 @@ public class Iyzico {
 		this.request.setCurrency(Currency.TRY.name());
 		this.request.setBasketId(basketId);
 		this.request.setPaymentGroup(PaymentGroup.PRODUCT.name());
-		this.request.setCallbackUrl("localhost:8080");
+		this.request.setCallbackUrl("https://dev.iyzipay.com/tr/");
 		return request;
 	}
 	

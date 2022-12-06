@@ -23,20 +23,21 @@ import com.iyzipay.request.CreatePaymentRequest;
 public class Threed {
 
 	private Options options;
-	//private Request request;
+	// private Request request;
 	CreatePaymentRequest request = new CreatePaymentRequest();
 	private List<BasketItem> basketItems;
-	
-	public Threed(){
+
+	public Threed() {
 		this.options = new Options();
 		this.options.setApiKey("sandbox-zCUOOTp8b1gj2GpryC6TVHGJwFtue772");
 		this.options.setSecretKey("sandbox-pCgicvmee36ULbvf1f8Zgm1iSYXXf7Rr");
 		this.options.setBaseUrl("https://sandbox-api.iyzipay.com");
 		basketItems = new ArrayList<BasketItem>();
 	}
-	
-	public CreatePaymentRequest setForm(@RequestParam String conversationId,@RequestParam String price,@RequestParam String paidPrice, @RequestParam String basketId) {
-		
+
+	public CreatePaymentRequest setForm(@RequestParam String conversationId, @RequestParam String price,
+			@RequestParam String paidPrice, @RequestParam String basketId) {
+
 		this.request.setLocale(Locale.TR.getValue());
 		this.request.setConversationId(conversationId);
 		this.request.setPrice(new BigDecimal(price));
@@ -44,13 +45,14 @@ public class Threed {
 		this.request.setCurrency(Currency.TRY.name());
 		this.request.setBasketId(basketId);
 		this.request.setPaymentGroup(PaymentGroup.PRODUCT.name());
-		this.request.setCallbackUrl("www.localhost:8080");
+		this.request.setCallbackUrl("https://dev.iyzipay.com/tr/");
 		return request;
 	}
-	
-	public Buyer setBuyer(@RequestParam String id,@RequestParam String name,@RequestParam String surname, @RequestParam String gsmNumber
-			,@RequestParam String email,@RequestParam String idNumber,@RequestParam String registrationAddress, @RequestParam String ip
-			,@RequestParam String city,@RequestParam String country) {
+
+	public Buyer setBuyer(@RequestParam String id, @RequestParam String name, @RequestParam String surname,
+			@RequestParam String gsmNumber, @RequestParam String email, @RequestParam String idNumber,
+			@RequestParam String registrationAddress, @RequestParam String ip, @RequestParam String city,
+			@RequestParam String country) {
 		Buyer buyer = new Buyer();
 		buyer.setId(id);
 		buyer.setName(name);
@@ -65,10 +67,9 @@ public class Threed {
 		this.request.setBuyer(buyer);
 		return buyer;
 	}
-	
-	
-	
-	public Address setShipping(@RequestParam String contactName,@RequestParam String city,@RequestParam String country, @RequestParam String address) {
+
+	public Address setShipping(@RequestParam String contactName, @RequestParam String city,
+			@RequestParam String country, @RequestParam String address) {
 
 		Address shippingAddress = new Address();
 		shippingAddress.setContactName(contactName);
@@ -78,8 +79,22 @@ public class Threed {
 		request.setShippingAddress(shippingAddress);
 		return shippingAddress;
 	}
-	
-	public Address setBilling(@RequestParam String contactName,@RequestParam String city,@RequestParam String country, @RequestParam String address) {
+
+	public PaymentCard setPaymentCard(@RequestParam String cardHolderName, @RequestParam String cardNumber,
+			@RequestParam String expireMonth, @RequestParam String expireYear,@RequestParam String cvc) {
+		PaymentCard paymentCard = new PaymentCard();
+		paymentCard.setCardHolderName(cardHolderName);
+		paymentCard.setCardNumber(cardNumber);
+		paymentCard.setExpireMonth(expireMonth);
+		paymentCard.setExpireYear(expireYear);
+		paymentCard.setCvc(cvc);
+		paymentCard.setRegisterCard(0);
+		request.setPaymentCard(paymentCard);
+		return paymentCard;
+	}
+
+	public Address setBilling(@RequestParam String contactName, @RequestParam String city, @RequestParam String country,
+			@RequestParam String address) {
 		Address billingAddress = new Address();
 		billingAddress.setContactName(contactName);
 		billingAddress.setCity(city);
@@ -88,27 +103,26 @@ public class Threed {
 		request.setBillingAddress(billingAddress);
 		return billingAddress;
 	}
-	
-	public BasketItem setItems(@RequestParam String id, @RequestParam String name, @RequestParam String category1, @RequestParam String category2
-			,@RequestParam String price) {
+
+	public BasketItem setItems(@RequestParam String id, @RequestParam String name, @RequestParam String category1,
+			@RequestParam String category2, @RequestParam String price) {
 		BasketItem basketItem = new BasketItem();
-		
-			basketItem.setId(id);
-			basketItem.setName(name);
-			basketItem.setCategory1(category1);
-			basketItem.setCategory2(category2);
-			basketItem.setItemType(BasketItemType.PHYSICAL.name());
-			basketItem.setPrice(new BigDecimal(price));
-			basketItems.add(basketItem);
-		
+
+		basketItem.setId(id);
+		basketItem.setName(name);
+		basketItem.setCategory1(category1);
+		basketItem.setCategory2(category2);
+		basketItem.setItemType(BasketItemType.PHYSICAL.name());
+		basketItem.setPrice(new BigDecimal(price));
+		basketItems.add(basketItem);
+
 		request.setBasketItems(basketItems);
 		return basketItem;
 	}
-	
+
 	public ThreedsInitialize paymentForm() {
 		ThreedsInitialize threedsInitialize = ThreedsInitialize.create(request, options);
 		return threedsInitialize;
 	}
-	
-	
+
 }

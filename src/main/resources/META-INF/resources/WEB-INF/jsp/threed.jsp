@@ -17,7 +17,7 @@
         <h1>Odeme Sayfasi</h1>
         <div>
             <h2>${contentThree}</h2>
-            <div id="iyzipay-checkout-form" class="responsive"></div>
+            
             
         </div>
     </article>

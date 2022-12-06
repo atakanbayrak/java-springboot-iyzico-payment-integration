@@ -13,15 +13,15 @@
         a:hover{color: #333; text-decoration: none;}
     </style>
     
-    <article>
-        <h1>Odeme Sayfasi</h1>
-        <form method="post">
-        <div>
-            <h2>${content}</h2>
-            <div id="iyzipay-checkout-form" class="responsive"></div>
+        <article>
+            <h1>Odeme Sayfasi</h1>
             
-        </div>
-        </form>
-    </article>
+            <div>
+                <h2>${content}</h2>
+                <div id="iyzipay-checkout-form" class="responsive"></div>
+            </div>
+            
+        </article>
+    
 </body>
 </html>

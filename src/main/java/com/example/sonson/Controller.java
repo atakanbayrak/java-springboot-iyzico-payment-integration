@@ -17,43 +17,30 @@ import com.iyzipay.request.CreateCheckoutFormInitializeRequest;
 
 @org.springframework.stereotype.Controller
 public class Controller {
-	CreateCheckoutFormInitializeRequest request = new CreateCheckoutFormInitializeRequest();
 	List<BasketItem> items = new ArrayList<BasketItem>();
 	Iyzico iyzico;
 	Threed threed;
 	Iyzico iyzipay_checkout_form;
 	Payment payment;
 	PaymentCard paymentCard = new PaymentCard();
+	
 	@RequestMapping(value="/pay", method = RequestMethod.GET)
 	public String payment(ModelMap model) 
 	{
-		iyzico = new Iyzico();
-		iyzico.setForm("123456789", "120.0", "126.0", "SPT123456");
-		iyzico.setBuyer("123", "Ahmet", "Buyer", "05075077575", "atakan@hotmail.com", "1234567901", "Alici Adresi Istanbul", "192.169.02.01","Istanbul", "Turkiye");
-		iyzico.setShipping("Veli Kısabacak", "Ankara", "Türkiye", "Kargonun adresi ile ayni");
-		iyzico.setBilling("Veli Kısabacak", "Ankara", "Türkiye", "Kargonun adresi ile ayni");
-		iyzico.setItems("8749", "Ayakkabi", "Erkek Ayakkabi","Gunluk Ayakkabi", "120");
+		threed = new Threed();
+		threed.setForm("123456789", "120.0", "126.0", "SPT123456");
+		threed.setBuyer("123", "Ahmet", "Buyer", "05075077575", "atakan@hotmail.com", "1234567901", "Alici Adresi Istanbul", "192.169.02.01","Istanbul", "Turkiye");
+		threed.setShipping("Veli Kısabacak", "Ankara", "Türkiye", "Kargonun adresi ile ayni");
+		threed.setBilling("Veli Kısabacak", "Ankara", "Türkiye", "Kargonun adresi ile ayni");
+		threed.setItems("8749", "Ayakkabi", "Erkek Ayakkabi","Gunluk Ayakkabi", "120");
+		threed.setPaymentCard("Atakan Bayrak", "4603450000000000", "10", "25", "425");
 		
 		
-		String content = iyzico.paymentForm().getCheckoutFormContent();
-		model.put("content", iyzico.paymentForm().getCheckoutFormContent());
-		
+		String content = threed.paymentForm().getHtmlContent();
+		model.put("content", content);
+		System.out.println(threed.paymentForm().getHtmlContent());
 		return "payment";
 	}
 	
-	@RequestMapping(value="/pay", method=RequestMethod.PUT)
-	public String threeD(ModelMap model,@RequestParam String cardHolderName, @RequestParam String cardNumber
-			,@RequestParam String expireDate,@RequestParam String cvc)
-	{
-		System.out.println(cardHolderName);
-		paymentCard.setCardHolderName(cardHolderName);
-		paymentCard.setCardNumber(cardNumber);
-		paymentCard.setExpireMonth(expireDate);
-		paymentCard.setCvc(cvc);
-		String contentThree = threed.paymentForm().getHtmlContent();
-		model.put("contentThree", threed.paymentForm().getHtmlContent());
-		System.out.println(contentThree);
-		return "threed";
-		
-	}
+	
 }
