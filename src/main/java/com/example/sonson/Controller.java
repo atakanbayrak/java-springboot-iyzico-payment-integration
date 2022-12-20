@@ -19,28 +19,75 @@ import com.iyzipay.request.CreateCheckoutFormInitializeRequest;
 public class Controller {
 	List<BasketItem> items = new ArrayList<BasketItem>();
 	Iyzico iyzico;
-	Threed threed;
+
 	Iyzico iyzipay_checkout_form;
 	Payment payment;
 	PaymentCard paymentCard = new PaymentCard();
-	
+	Threed threed = new Threed();
 	@RequestMapping(value="/pay", method = RequestMethod.GET)
-	public String payment(ModelMap model) 
+	public String payment(ModelMap model,@RequestParam(required = false) String conversationId, @RequestParam String price,
+			@RequestParam String paidPrice, @RequestParam String basketId,
+			
+			@RequestParam String id, @RequestParam String name, @RequestParam String surname,
+			@RequestParam String gsmNumber, @RequestParam String email, @RequestParam String idNumber,
+			@RequestParam String registrationAddress, @RequestParam String ip, @RequestParam String city,
+			@RequestParam String country,
+			
+			@RequestParam String contactName,@RequestParam String address,
+			
+			@RequestParam String cardHolderName, @RequestParam String cardNumber,
+			@RequestParam String expireMonth, @RequestParam String expireYear,@RequestParam String cvc,
+			
+			@RequestParam String itemId, @RequestParam String itemName, @RequestParam String category1,
+			@RequestParam String category2, @RequestParam String subprice
+			) 
 	{
-		threed = new Threed();
-		threed.setForm("123456789", "120.0", "126.0", "SPT123456");
-		threed.setBuyer("123", "Ahmet", "Buyer", "05075077575", "atakan@hotmail.com", "1234567901", "Alici Adresi Istanbul", "192.169.02.01","Istanbul", "Turkiye");
-		threed.setShipping("Veli Kısabacak", "Ankara", "Türkiye", "Kargonun adresi ile ayni");
-		threed.setBilling("Veli Kısabacak", "Ankara", "Türkiye", "Kargonun adresi ile ayni");
-		threed.setItems("8749", "Ayakkabi", "Erkek Ayakkabi","Gunluk Ayakkabi", "120");
-		threed.setPaymentCard("Atakan Bayrak", "4603450000000000", "10", "25", "425");
-		
+		threed.setForm(conversationId, price, paidPrice, basketId);
+		threed.setBuyer(id, name, surname, gsmNumber, email, idNumber, registrationAddress, ip, city, country);
+		threed.setShipping(contactName, city, country, address);
+		threed.setBilling(contactName, city, country, address);
+		threed.setItems(itemId, itemName, category1,category2, price,subprice);
+		threed.setPaymentCard(cardHolderName, cardNumber, expireMonth, expireYear, cvc);
 		
 		String content = threed.paymentForm().getHtmlContent();
 		model.put("content", content);
-		System.out.println(threed.paymentForm().getHtmlContent());
+		//System.out.println(threed.paymentForm().getHtmlContent());
 		return "payment";
+	}
+	
+	@RequestMapping(value="/callback")
+	public String callback(ModelMap model) 
+	{
+		String contentCallBackStatus = threed.paymentForm().getStatus();
+		String contentCallBackConversationId = threed.paymentForm().getConversationId();
+		String contentCallBackError = threed.paymentForm().getErrorMessage();
+		String contentCallBackErrorCode = threed.paymentForm().getErrorCode();
+		String contentCallBackErrorGroup = threed.paymentForm().getErrorGroup();
+		System.out.println(contentCallBackStatus);
+		model.put("contentCallBackError",contentCallBackError);
+		model.put("contentCallBackStatus",contentCallBackStatus);
+		model.put("contentCallBackConversationId",contentCallBackConversationId);
+		model.put("contentCallBackErrorCode",contentCallBackErrorCode);
+		model.put("contentCallBackErrorGroup",contentCallBackErrorGroup);
+		//System.out.println(threed.paymentForm().getHtmlContent());
+		return "callback";
 	}
 	
 	
 }
+
+/*
+ * 
+ * threed.setForm(conversationId, price, paidPrice, basketId);
+		threed.setBuyer(id, name, surname, gsmNumber, email, idNumber, registrationAddress, ip, city, country);
+		threed.setShipping(contactName, city, country, address);
+		threed.setBilling(contactName, city, country, address);
+		threed.setItems(itemId, itemName, category1,category2, price,subprice);
+		threed.setPaymentCard(cardHolderName, cardNumber, expireMonth, expireYear, cvc);
+threed.setForm("123456789", "1.0", "1.0", "SPT123456");
+threed.setBuyer("123", "Ahmet", "Buyer", "05075077575", "atakan@hotmail.com", "1234567901", "Alici Adresi Istanbul", "192.169.02.01","Istanbul", "Turkiye");
+threed.setShipping("Veli Kısabacak", "Ankara", "Türkiye", "Kargonun adresi ile ayni");
+threed.setBilling("Veli Kısabacak", "Ankara", "Türkiye", "Kargonun adresi ile ayni");
+threed.setItems("8749", "Ayakkabi", "Erkek Ayakkabi","Gunluk Ayakkabi", "1.0","0.70");
+threed.setPaymentCard("Atakan Bayrak", "5168880000000002", "08", "23", "373");
+System.out.println(threed.paymentForm().getConversationId());*/

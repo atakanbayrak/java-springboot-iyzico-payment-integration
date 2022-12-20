@@ -11,13 +11,11 @@ import com.iyzipay.model.Address;
 import com.iyzipay.model.BasketItem;
 import com.iyzipay.model.BasketItemType;
 import com.iyzipay.model.Buyer;
-import com.iyzipay.model.CheckoutFormInitialize;
 import com.iyzipay.model.Currency;
 import com.iyzipay.model.Locale;
 import com.iyzipay.model.PaymentCard;
 import com.iyzipay.model.PaymentGroup;
 import com.iyzipay.model.ThreedsInitialize;
-import com.iyzipay.request.CreateCheckoutFormInitializeRequest;
 import com.iyzipay.request.CreatePaymentRequest;
 
 public class Threed {
@@ -29,9 +27,9 @@ public class Threed {
 
 	public Threed() {
 		this.options = new Options();
-		this.options.setApiKey("sandbox-zCUOOTp8b1gj2GpryC6TVHGJwFtue772");
-		this.options.setSecretKey("sandbox-pCgicvmee36ULbvf1f8Zgm1iSYXXf7Rr");
-		this.options.setBaseUrl("https://sandbox-api.iyzipay.com");
+		this.options.setApiKey("ulZGIdysNVA0GP598cFEb4L82V5g1QEW");
+		this.options.setSecretKey("0lGZ8MJVWZYtstsVn5MMM1zRcM9oPuDj");
+		this.options.setBaseUrl("https://api.iyzipay.com");
 		basketItems = new ArrayList<BasketItem>();
 	}
 
@@ -45,7 +43,7 @@ public class Threed {
 		this.request.setCurrency(Currency.TRY.name());
 		this.request.setBasketId(basketId);
 		this.request.setPaymentGroup(PaymentGroup.PRODUCT.name());
-		this.request.setCallbackUrl("https://dev.iyzipay.com/tr/");
+		this.request.setCallbackUrl("http://localhost:8080/callback");
 		return request;
 	}
 
@@ -105,7 +103,7 @@ public class Threed {
 	}
 
 	public BasketItem setItems(@RequestParam String id, @RequestParam String name, @RequestParam String category1,
-			@RequestParam String category2, @RequestParam String price) {
+			@RequestParam String category2, @RequestParam String price, @RequestParam String subprice) {
 		BasketItem basketItem = new BasketItem();
 
 		basketItem.setId(id);
@@ -114,6 +112,8 @@ public class Threed {
 		basketItem.setCategory2(category2);
 		basketItem.setItemType(BasketItemType.PHYSICAL.name());
 		basketItem.setPrice(new BigDecimal(price));
+		basketItem.setSubMerchantKey("OEeagHh2BF2ff/cETTxNfuURiiI=");
+		basketItem.setSubMerchantPrice(new BigDecimal(subprice));
 		basketItems.add(basketItem);
 
 		request.setBasketItems(basketItems);
