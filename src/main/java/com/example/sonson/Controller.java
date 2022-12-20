@@ -90,4 +90,8 @@ threed.setShipping("Veli Kısabacak", "Ankara", "Türkiye", "Kargonun adresi ile
 threed.setBilling("Veli Kısabacak", "Ankara", "Türkiye", "Kargonun adresi ile ayni");
 threed.setItems("8749", "Ayakkabi", "Erkek Ayakkabi","Gunluk Ayakkabi", "1.0","0.70");
 threed.setPaymentCard("Atakan Bayrak", "5168880000000002", "08", "23", "373");
-System.out.println(threed.paymentForm().getConversationId());*/
+System.out.println(threed.paymentForm().getConversationId());
+
+*
+*http://localhost:8080/pay?conversationId=123456789&price=1&paidPrice=1&basketId=SPT123456&id=123&name=Ahmet&surname=Buyer&gsmNumber=05075077575&email=atakan@hotmail.com&idNumber=1234567901&registrationAddress=Alici Adresi Istanbul&ip=192.169.02.01&city=Istanbul&country=Turkiye&contactName=Veli Kısabacak&address=Ankara&cardHolderName=Atakan Bayrak&cardNumber=5168880000000002&expireMonth=08&expireYear=23&cvc=373&itemId=8749&itemName=Ayakkabi&category1=Erkek Ayakkabi&category2=Gunluk Ayakkabi&subprice=0.70
+*/
